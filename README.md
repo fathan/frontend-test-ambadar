@@ -3,7 +3,7 @@ HRIS management system administrator dashboard for user.
 
 ## DEMO APP
 
-[URL-APP](https://URL-APP)
+[KLIK FOR URL DEMO](https://frontend-test-ambadar.vercel.app/)
 
 ## Recommended IDE Setup
 
@@ -16,10 +16,6 @@ TypeScript cannot handle type information for `.vue` imports by default, so we r
 ## Customize Configuration
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Database Storage Local
-
-- for save data storage local browser I choose localStorage. collaborate state management `pinia` includes `persistedstate` with auto save to localStorage browser.
 
 ## Minimum Requirements (Modules, Library, Plugin)
 
@@ -197,3 +193,4 @@ frontend-test-ambadar/
 └── vite.config.ts
 └── vitest.config.ts
 ```
+copyright 2025 - Created by Fathan Rohman
