@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  ambadar-fe-production:
+    build:
+      context: ../../
+      dockerfile: docker/production/Dockerfile
+    image: ambadar-fe-production
+    ports:
+      - "3001:80"
