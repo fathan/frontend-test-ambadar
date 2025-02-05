@@ -8,13 +8,16 @@
   >
     <div class="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-[#020203] pt-0">
       <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
-        <div class="flex flex-row px-5 mb-5">
+        <div class="flex px-5 mb-5 items-center justify-center">
           <div class="mb-4 mr-2">
             <img src="https://ambadar.com/storage/2023/08/Logo-Ambadar-White-250x100.png" style="width: 150px;">
           </div>
         </div>
 
-        <div class="flex-1 px-3 bg-[#020203] divide-y space-y-1">
+        <div class="flex-1 px-3 bg-[#020203] space-y-1">
+          <div class="text-base font-light text-white ml-2 mb-3">
+            Menu
+          </div>
           <ul class="space-y-2 pb-2">
             <li
               v-for="(item, index) in menuData"
@@ -30,9 +33,9 @@
                     :to="{
                       path: item.link
                     }"
-                    class="w-full flex p-2 text-white text-base font-bold rounded-lg hover:bg-gray-800"
+                    class="w-full flex p-2 text-white text-base font-bold rounded-lg hover:bg-[#3a3c42]"
                   >
-                    <img :src="item.icon">
+                    <v-icon :name="item.icon" scale="1" />
                     <span class="ml-3 text-[#ffffff] font-light text-sm">
                       {{ item.title }}
                     </span>
@@ -124,8 +127,6 @@ import { useAppStore } from '@stores/app';
 
 import * as Constant from '@configurations/constants';
 
-import IconHomeLine from '@assets/icons/icon-home-line.svg';
-
 enum UserRole {
   SuperAdmin = Constant.ROLE_SUPERADMIN,
   Admin = Constant.ROLE_ADMIN,
@@ -148,7 +149,7 @@ const appStore = useAppStore();
 const menuData: MenuItem[] = [
   {
     title: 'Dashboard',
-    icon: IconHomeLine,
+    icon: 'ri-dashboard-line',
     link: '/admin/dashboard',
     access: [
       UserRole.SuperAdmin, UserRole.Admin, UserRole.User
@@ -156,7 +157,7 @@ const menuData: MenuItem[] = [
   },
   {
     title: 'IP Projects',
-    icon: IconHomeLine,
+    icon: 'oi-light-bulb',
     link: '/admin/ip-projects',
     access: [
       UserRole.SuperAdmin, UserRole.Admin, UserRole.User
@@ -164,7 +165,7 @@ const menuData: MenuItem[] = [
   },
   {
     title: 'Case Management',
-    icon: IconHomeLine,
+    icon: 'ri-scales-3-line',
     link: '/admin/dashboard',
     access: [
       UserRole.SuperAdmin, UserRole.Admin, UserRole.User
@@ -172,7 +173,7 @@ const menuData: MenuItem[] = [
   },
   {
     title: 'Billing & Payment',
-    icon: IconHomeLine,
+    icon: 'hi-currency-dollar',
     link: '/admin/dashboard',
     access: [
       UserRole.SuperAdmin, UserRole.Admin, UserRole.User
@@ -180,7 +181,7 @@ const menuData: MenuItem[] = [
   },
   {
     title: 'Reports',
-    icon: IconHomeLine,
+    icon: 'ri-pie-chart-line',
     link: '/admin/dashboard',
     access: [
       UserRole.SuperAdmin, UserRole.Admin, UserRole.User

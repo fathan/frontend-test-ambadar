@@ -13,6 +13,9 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   return {
+    optimizeDeps: {
+      exclude: ['oh-vue-icons/icons']
+    },
     build: {
       manifest: true,
       chunkSizeWarningLimit: 1600,

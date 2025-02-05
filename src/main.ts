@@ -3,6 +3,12 @@ import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import mitt from 'mitt';
 
+import { OhVueIcon, addIcons } from 'oh-vue-icons';
+import {
+  RiDashboardLine, RiScales3Line, OiLightBulb, HiCurrencyDollar, RiPieChartLine, RiLeafLine,
+  IoPrismSharp, IoDocument
+} from 'oh-vue-icons/icons';
+
 import App from './App.vue';
 import router from './router';
 import '@styles/tailwindcss.css';
@@ -36,6 +42,16 @@ app.use(pinia);
  * Vue Router
  * */
 app.use(router);
+
+/**
+ * Oh Vue Icons
+ * */
+addIcons(
+  RiDashboardLine, RiScales3Line, OiLightBulb, HiCurrencyDollar, RiPieChartLine, RiLeafLine,
+  IoPrismSharp, IoDocument
+);
+
+app.component('v-icon', OhVueIcon);
 
 /**
  * Global Components

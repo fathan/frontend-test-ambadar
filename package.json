@@ -29,6 +29,7 @@
     "axios": "1.7.2",
     "chart.js": "^3.9.1",
     "mitt": "3.0.1",
+    "oh-vue-icons": "^1.0.0-rc3",
     "pinia": "2.1.7",
     "pinia-plugin-persistedstate": "3.2.1",
     "vue": "3.4.29",

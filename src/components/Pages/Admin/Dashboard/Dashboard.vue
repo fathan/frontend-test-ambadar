@@ -5,28 +5,36 @@
       :breadcrumb-data="state.breadcrumbs"
     />
 
-    <section class="grid grid-cols-3 gap-4">
+    <section class="grid grid-cols-3 gap-8">
       <MoleculeCardDashboard title="Your IP Projects">
         <template #content-wrapper>
           <MoleculeCardInfoDashboard
+            icon="oi-light-bulb"
+            icon-color="#00b5cd"
             title="10"
             subtitle="Patent"
             background-color="bg-sky-100"
           />
 
           <MoleculeCardInfoDashboard
+            icon="io-document"
+            icon-color="#fe7b00"
             title="3"
             subtitle="Trademark"
             background-color="bg-orange-100"
           />
 
           <MoleculeCardInfoDashboard
+            icon="io-prism-sharp"
+            icon-color="#7d31f7"
             title="3"
             subtitle="Industrial Design"
             background-color="bg-purple-100"
           />
 
           <MoleculeCardInfoDashboard
+            icon="ri-leaf-line"
+            icon-color="#00a64e"
             title="3"
             subtitle="PVT"
             background-color="bg-green-100"
@@ -43,26 +51,34 @@
       <MoleculeCardDashboard title="Your Pending Tasks">
         <template #content-wrapper>
           <MoleculeCardInfoDashboard
+            icon="oi-light-bulb"
+            icon-color="#00b5cd"
             title="PT.123-123-123"
             subtitle="Certified Copy of JP Patent"
             background-color="bg-sky-100"
           />
 
           <MoleculeCardInfoDashboard
+            icon="oi-light-bulb"
+            icon-color="#00b5cd"
             title="PT.123-123-123"
-            subtitle="Waiting of Requitment"
+            subtitle="Waiting fo Requitment"
             background-color="bg-sky-100"
           />
 
           <MoleculeCardInfoDashboard
+            icon="io-prism-sharp"
+            icon-color="#7d31f7"
             title="PT.123-123-123"
             subtitle="Assignment Document"
             background-color="bg-purple-100"
           />
 
           <MoleculeCardInfoDashboard
+            icon="oi-light-bulb"
+            icon-color="#00b5cd"
             title="PT.123-123-123"
-            subtitle="Waiting of Requitment"
+            subtitle="Waiting fo Requitment"
             background-color="bg-sky-100"
           />
         </template>

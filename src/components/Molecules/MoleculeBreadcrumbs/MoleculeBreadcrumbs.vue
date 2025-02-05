@@ -1,6 +1,7 @@
 <template>
   <a-breadcrumb
     separator="&nbsp;&nbsp;>&nbsp;&nbsp;"
+    class="mb-4"
     :routes="breadcrumbData"
   >
     <template #itemRender="{ route, paths }">
@@ -56,7 +57,7 @@ interface IProps {
 // ///////////////////////////
 
 withDefaults(defineProps<IProps>(), {
-  isWithBottomLine: true,
+  isWithBottomLine: false,
   breadcrumbData: () => [] as IBreadcrumbData[]
 });
 
