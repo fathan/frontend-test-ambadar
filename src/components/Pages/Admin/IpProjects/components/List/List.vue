@@ -95,25 +95,25 @@
         >
           <Column selectionMode="multiple" headerStyle="width: 3rem" />
           <Column field="id" header="No" headerClass="bg-gray-100 text-center text-gray-500" />
-          <Column field="name" header="Project Name" sortable headerClass="bg-gray-100 text-center text-gray-500" />
+          <Column field="" header="Project Name" sortable headerClass="bg-gray-100 text-center text-gray-500">
+            <template #body="slotProps">
+              {{ slotProps.data.company.name }}
+            </template>
+          </Column>
           <Column field="" header="IP Type" sortable headerClass="bg-gray-100 text-center text-gray-500">
             <template #body>
               -
             </template>
           </Column>
-          <Column field="" header="Project No" sortable headerClass="bg-gray-100 text-center text-gray-500">
-            <template #body>
-              -
+          <Column field="phone" header="Project No" sortable headerClass="bg-gray-100 text-center text-gray-500" />
+          <Column field="addres.zipcode" header="Filling No" sortable headerClass="bg-gray-100 text-center text-gray-500">
+            <template #body="slotProps">
+              {{ slotProps.data.address.zipcode }}
             </template>
           </Column>
-          <Column field="" header="Filling No" sortable headerClass="bg-gray-100 text-center text-gray-500">
-            <template #body>
-              -
-            </template>
-          </Column>
-          <Column field="" header="Registered No" sortable headerClass="bg-gray-100 text-center text-gray-500">
-            <template #body>
-              -
+          <Column field="addres.suite" header="Registered No" sortable headerClass="bg-gray-100 text-center text-gray-500">
+            <template #body="slotProps">
+              {{ slotProps.data.address.suite }}
             </template>
           </Column>
           <Column field="" header="Order Type" sortable headerClass="bg-gray-100 text-center text-gray-500">
@@ -121,11 +121,7 @@
               -
             </template>
           </Column>
-          <Column field="" header="PIC" sortable headerClass="bg-gray-100 text-center text-gray-500">
-            <template #body>
-              -
-            </template>
-          </Column>
+          <Column field="name" header="PIC" sortable headerClass="bg-gray-100 text-center text-gray-500" />
           <Column field="" header="Status" sortable headerClass="bg-gray-100 text-center text-gray-500">
             <template #body="slotProps">
               <span 
