@@ -40,7 +40,12 @@
 
         <div class="flex flex-col lg:flex-row lg:justify-between bg-[#f5f5f5] rounded-md p-3 mb-4">
           <div class="mb-4 lg:mb-0">
-            <a-input size="large" placeholder="Search">
+            <a-input
+              v-model:value="searchQuery"
+              size="large"
+              placeholder="Search project name"
+              @keyup.enter="searchProjectName"
+            >
               <template #prefix>
                 <v-icon name="md-search-outlined" class="mr-2 text-gray-300" />
               </template>
@@ -54,7 +59,7 @@
               placeholder="Choose IP"
               size="large"
               style="width: 300px"
-              :options="options"
+              :options="primaryOptions"
               :filter-option="filterOptionSelectPrimary"
               @focus="handleFocusSelectPrimary"
               @blur="handleBlurSelectPrimary"
@@ -66,7 +71,7 @@
               placeholder="Select Columns"
               size="large"
               style="width: 500px"
-              :options="options"
+              :options="secondaryOptions"
               :filter-option="filterOptionSelectSecondary"
               @focus="handleFocusSelectSecondary"
               @blur="handleBlurSelectSecondary"
@@ -75,7 +80,9 @@
           </div>
         </div>
 
-        <DataTable 
+        <DataTable
+          v-model:selection="selectedRows" 
+          dataKey="id"
           :value="ipprojects" 
           :loading="loading" 
           :paginator="false" 
@@ -86,12 +93,12 @@
           :sortField="sortField"
           :sortOrder="sortOrder"
           :rowsPerPageOptions="[5, 10, 20, 50]"
-          :selection="selectedRows"
-          dataKey="id"
           class="border border-gray-200 rounded-lg overflow-hidden"
           @page="onPageChange"
           @sort="onSortChange"
           @selection-change="onSelectionChange"
+          @row-select="onSelectionChange"
+          @row-unselect="onSelectionChange"
         >
           <Column selectionMode="multiple" headerStyle="width: 3rem" />
           <Column field="id" header="No" headerClass="bg-gray-100 text-center text-gray-500" />
@@ -106,23 +113,23 @@
             </template>
           </Column>
           <Column field="phone" header="Project No" sortable headerClass="bg-gray-100 text-center text-gray-500" />
-          <Column field="addres.zipcode" header="Filling No" sortable headerClass="bg-gray-100 text-center text-gray-500">
+          <Column field="" header="Filling No" headerClass="bg-gray-100 text-center text-gray-500">
             <template #body="slotProps">
               {{ slotProps.data.address.zipcode }}
             </template>
           </Column>
-          <Column field="addres.suite" header="Registered No" sortable headerClass="bg-gray-100 text-center text-gray-500">
+          <Column field="" header="Registered No" headerClass="bg-gray-100 text-center text-gray-500">
             <template #body="slotProps">
               {{ slotProps.data.address.suite }}
             </template>
           </Column>
-          <Column field="" header="Order Type" sortable headerClass="bg-gray-100 text-center text-gray-500">
+          <Column field="" header="Order Type" headerClass="bg-gray-100 text-center text-gray-500">
             <template #body>
               -
             </template>
           </Column>
           <Column field="name" header="PIC" sortable headerClass="bg-gray-100 text-center text-gray-500" />
-          <Column field="" header="Status" sortable headerClass="bg-gray-100 text-center text-gray-500">
+          <Column field="" header="Status" headerClass="bg-gray-100 text-center text-gray-500">
             <template #body="slotProps">
               <span 
                 :class="[
@@ -208,10 +215,16 @@ const state = reactive<IState>({
   activeTab: 'all'
 });
 
-const options = ref<SelectProps['options']>([
-  { value: 'jack', label: 'Jack' },
-  { value: 'lucy', label: 'Lucy' },
-  { value: 'tom', label: 'Tom' }
+const primaryOptions = ref<SelectProps['options']>([
+  { value: 'ip #1', label: 'Option IP #1' },
+  { value: 'ip #2', label: 'Option IP #2' },
+  { value: 'ip #3', label: 'Option IP #3' }
+]);
+
+const secondaryOptions = ref<SelectProps['options']>([
+  { value: '1', label: 'Option #1' },
+  { value: '2', label: 'Option #2' },
+  { value: '3', label: 'Option #3' }
 ]);
 
 const ipprojects = ref([]);
@@ -222,6 +235,7 @@ const perPage: Ref<number> = ref(5);
 const sortField: Ref<string> = ref('');
 const sortOrder: Ref<number> = ref(1);
 const selectedRows: Ref<any[]> = ref([]);
+const searchQuery: Ref<string> = ref('');
 
 // /////////////////////////////////////
 
@@ -285,12 +299,19 @@ const xhrFetchData = async () => {
   loading.value = true;
   
   const _sortOrder = sortOrder.value === 1 ? 'asc' : 'desc';
-  const queryParams = new URLSearchParams({
+
+  const objData = {
     _page: currentPage.value.toString(),
     _limit: perPage.value.toString(),
     _sort: sortField.value,
     _order: _sortOrder
-  });
+  };
+
+  if (searchQuery.value) {
+    objData['q'] = searchQuery.value;
+  }
+
+  const queryParams = new URLSearchParams(objData);
 
   try {
     const response = await UserService.getList(queryParams.toString());
@@ -329,7 +350,16 @@ const onSortChange = (event: any) => {
 };
 
 const onSelectionChange = (event: any) => {
-  selectedRows.value = event.value;
+  const filtered = selectedRows.value.filter((row: any) => row.id === event.data.id);
+
+  if (!filtered) {
+    selectedRows.value.push(event.data);
+  }
+
+};
+
+const searchProjectName = () => {
+  xhrFetchData();
 };
 
 onMounted(xhrFetchData);
