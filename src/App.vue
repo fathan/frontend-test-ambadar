@@ -6,16 +6,42 @@
       </transition>
     </router-view>
 
-    <AtomBadgeHelpSupport @click="onClickHelp" />
+    <AtomBadgeHelpSupport
+      v-if="visibleBadge"
+      @click="onClickHelp"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+
 import AtomBadgeHelpSupport from '@components/Atoms/AtomBadgeHelpSupport';
+
+const route = useRoute();
+const visibleBadge = ref(true);
 
 const onClickHelp = () => {
   window.alert('Please contact us to administrator or developer');
 };
+
+const onCheckHandleVisibleBadge = () => {
+  if (route.name === 'Admin Dashboard') {
+    visibleBadge.value = true;
+  }
+  else {
+    visibleBadge.value = false;
+  }
+};
+
+watch(route, () => {
+  onCheckHandleVisibleBadge();
+});
+
+onMounted(() => {
+  onCheckHandleVisibleBadge();
+});
 </script>
 
 <style>

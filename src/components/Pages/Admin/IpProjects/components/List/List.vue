@@ -1,3 +1,4 @@
+<!-- eslint-disable max-len -->
 <template>
   <div>
     <div class="bg-[#0d1628] h-80 w-full" />
@@ -15,7 +16,7 @@
           </div>
 
           <div>
-            <a-button size="large" class="border border-gray-500">
+            <a-button size="large" class="border border-gray-500" @click="onClickExportData">
               <template #icon>
                 <v-icon name="md-filedownload-outlined" class="mr-2" />
               </template>
@@ -157,6 +158,12 @@
           :currentPage="currentPage"
           @page-change="onPageChangeCustom"
         />
+
+        <a-alert
+          message="Note:"
+          description="XHR HTTP request fetch data dalam datatable sengaja saya buat server side agar terlihat proses fetch data ke API nya. untuk export data saya sertakan dalam bentuk dummy mock JSON file agar bisa di download."
+          type="info"
+        />
       </div>
     </div>
   </div>
@@ -166,6 +173,10 @@
 import { ref, onMounted, reactive, computed } from 'vue';
 import type { Ref } from 'vue';
 import type { SelectProps } from 'ant-design-vue';
+
+import MockIpProjects from '@/__mock__/ip-project.json';
+
+import { generateFileName, exportJsonToCSV } from '@utils/app';
 
 import type { IBreadcrumbData } from '@/components/Molecules/MoleculeBreadcrumbs/model';
 
@@ -308,5 +319,12 @@ const onPageChangeCustom = (page: number) => {
   currentPage.value = page;
 
   xhrFetchData();
+};
+
+const onClickExportData = () => {
+  const fileName = generateFileName('ip-projects', 'csv');
+  const finalData = MockIpProjects.data;
+
+  exportJsonToCSV(finalData, fileName);
 };
 </script>

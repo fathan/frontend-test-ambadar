@@ -127,7 +127,7 @@ let axiosClient: AxiosClient;
 
 const initializeHttp = (): AxiosClient => {
   axiosClient = new AxiosClient({
-    baseURL: import.meta.env.VITE_BASE_URL_SERVICES_GITHUB_API,
+    baseURL: import.meta.env.VITE_BASE_URL_SERVICES_JSON_PLACEHOLDER_API,
     timeout: 60000, // 60 seconds
     transform
   });
