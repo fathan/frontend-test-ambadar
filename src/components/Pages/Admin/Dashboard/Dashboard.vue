@@ -114,20 +114,24 @@
         @sort="onSortChange"
         @selection-change="onSelectionChange"
       >
-        <Column field="name" header="Name Company" sortable headerClass="bg-gray-100 text-center text-gray-500" />
+        <Column field="name" header="Name Company" sortable headerClass="bg-gray-100 text-center text-gray-500">
+          <template #body="slotProps">
+            {{ slotProps.data.company.name }}
+          </template>
+        </Column>
         <Column field="" header="IP Type" sortable headerClass="bg-gray-100 text-center text-gray-500">
-          <template #body>
-            -
+          <template #body="slotProps">
+            {{ slotProps.data.address.suite }}
           </template>
         </Column>
         <Column field="" header="Project No" sortable headerClass="bg-gray-100 text-center text-gray-500">
-          <template #body>
-            -
+          <template #body="slotProps">
+            {{ slotProps.data.address.zipcode }}
           </template>
         </Column>
         <Column field="" header="Client Ref" sortable headerClass="bg-gray-100 text-center text-gray-500">
-          <template #body>
-            -
+          <template #body="slotProps">
+            {{ slotProps.data.website }}
           </template>
         </Column>
         <Column field="" header="Last Update" sortable headerClass="bg-gray-100 text-center text-gray-500">

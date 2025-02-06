@@ -100,6 +100,17 @@
           @row-select="onSelectionChange"
           @row-unselect="onSelectionChange"
         >
+          <template #loading>
+            <div class="flex items-center justify-center p-4">
+              <svg class="animate-spin h-6 w-6 text-blue-500" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-dasharray="40 14" />
+              </svg>
+              <span class="ml-2 text-white text-sm">
+                Loading data, please wait...
+              </span>
+            </div>
+          </template>
+
           <Column selectionMode="multiple" headerStyle="width: 3rem" />
           <Column field="id" header="No" headerClass="bg-gray-100 text-center text-gray-500" />
           <Column field="" header="Project Name" sortable headerClass="bg-gray-100 text-center text-gray-500">
@@ -359,6 +370,8 @@ const onSelectionChange = (event: any) => {
 };
 
 const searchProjectName = () => {
+  currentPage.value = 1;
+  selectedRows.value = [];
   xhrFetchData();
 };
 
