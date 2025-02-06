@@ -1,5 +1,5 @@
 <template>
-  <main class="w-[102.9%] 2xl:w-[102.05%] -ml-4 px-8">
+  <main class="w-[102.9%] 2xl:w-[102.05%] -ml-4 px-4 lg:px-8">
     <div class="w-full relative bg-white">
       <div class="flex items-center gap-4 absolute left-[22px] w-[96.2%] 2xl:w-[97.2%]">
         <a-avatar

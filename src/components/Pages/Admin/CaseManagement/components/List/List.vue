@@ -2,13 +2,13 @@
   <div>
     <div class="bg-[#0d1628] h-80 w-full" />
 
-    <div class="p-4 px-8 -mt-80">
+    <div class="p-4 px-4 lg:px-8 -mt-80">
       <MoleculeBreadcrumbs
         :base-path="'/admin/user'"
         :breadcrumb-data="state.breadcrumbs"
       />
   
-      <div class="bg-white rounded-lg shadow-lg p-6">
+      <div class="bg-white rounded-lg shadow-lg p-3 lg:p-6">
         <div class="flex justify-between my-4">
           <div class="text-2xl font-semibold text-gray-700">
             Case Management

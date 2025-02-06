@@ -3,13 +3,13 @@
   <div>
     <div class="bg-[#0d1628] h-80 w-full" />
 
-    <div class="p-4 px-8 -mt-80">
+    <div class="p-4 px-4 lg:px-8 -mt-80">
       <MoleculeBreadcrumbs
         :base-path="'/admin/user'"
         :breadcrumb-data="state.breadcrumbs"
       />
   
-      <div class="bg-white rounded-lg shadow-lg p-6">
+      <div class="bg-white rounded-lg shadow-lg p-3 lg:p-6">
         <div class="flex justify-between my-4">
           <div class="text-2xl font-semibold text-gray-700">
             IP Project
@@ -38,8 +38,8 @@
           @update:active-tab="state.activeTab = $event"
         />
 
-        <div class="flex flex-row justify-between bg-[#f5f5f5] rounded-sm p-3">
-          <div>
+        <div class="flex flex-col lg:flex-row lg:justify-between bg-[#f5f5f5] rounded-md p-3 mb-4">
+          <div class="mb-4 lg:mb-0">
             <a-input size="large" placeholder="Search">
               <template #prefix>
                 <v-icon name="md-search-outlined" class="mr-2 text-gray-300" />

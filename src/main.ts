@@ -8,7 +8,7 @@ import {
   RiDashboardLine, RiScales3Line, OiLightBulb, HiCurrencyDollar, RiPieChartLine, RiLeafLine,
   IoPrismSharp, IoDocument, BiQuestionCircle, BiFileEarmarkLock, BiEye, PrAngleDoubleLeft,
   PrAngleDoubleRight, PrChevronLeft, PrChevronRight, MdFiledownloadOutlined, RiHome6Line,
-  MdSearchOutlined, FaRegularEnvelope
+  MdSearchOutlined, FaRegularEnvelope, CoHamburgerMenu
 } from 'oh-vue-icons/icons';
 
 import PrimeVue from 'primevue/config';
@@ -57,7 +57,7 @@ addIcons(
   RiDashboardLine, RiScales3Line, OiLightBulb, HiCurrencyDollar, RiPieChartLine, RiLeafLine,
   IoPrismSharp, IoDocument, BiQuestionCircle, BiFileEarmarkLock, BiEye, PrAngleDoubleLeft,
   PrAngleDoubleRight, PrChevronLeft, PrChevronRight, MdFiledownloadOutlined, RiHome6Line,
-  MdSearchOutlined, FaRegularEnvelope
+  MdSearchOutlined, FaRegularEnvelope, CoHamburgerMenu
 );
 
 /**

@@ -1,17 +1,17 @@
 <template>
-  <div class="flex justify-between items-center py-4 mt-2">
-    <span class="text-sm text-gray-700">
+  <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center py-4 mt-2">
+    <span class="text-xs lg:text-sm text-gray-700 mb-4 lg:mb-0">
       {{ selectedRows.length }} of {{ totalRecords }} row(s) selected.
     </span>
 
-    <div class="flex flex-row gap-4">
+    <div class="flex flex-col lg:flex-row gap-4">
       <div class="flex items-center space-x-2 mr-8">
-        <span class="text-sm font-semibold text-gray-700">
+        <span class="text-xs lg:text-sm font-semibold text-gray-700">
           Rows per page
         </span>
         <select 
           v-model="localPerPage"
-          class="border rounded px-2 py-1 text-sm" 
+          class="border rounded px-2 py-1 text-xs lg:text-sm" 
           @change="onPerPageChange"
         >
           <option
@@ -24,35 +24,35 @@
         </select>
       </div>
 
-      <div class="text-sm text-gray-700 font-semibold flex justify-center items-center mr-8">
+      <div class="text-xs lg:text-sm text-gray-700 font-semibold flex lg:justify-center lg:items-center mr-8">
         Page {{ currentPage }} of {{ totalPages }}
       </div>
 
       <div class="flex items-center space-x-2">
         <a-button 
           :disabled="currentPage === 1" 
-          class="px-2 text-sm border rounded-md disabled:opacity-50"
+          class="px-2 text-xs lg:text-sm border rounded-md disabled:opacity-50"
           @click="onPageChangeCustom(1)"
         >
           <v-icon name="pr-angle-double-left" scale="1" />
         </a-button>
         <a-button 
           :disabled="currentPage === 1" 
-          class="px-2 text-sm border rounded-md disabled:opacity-50"
+          class="px-2 text-xs lg:text-sm border rounded-md disabled:opacity-50"
           @click="onPageChangeCustom(currentPage - 1)"
         >
           <v-icon name="pr-chevron-left" scale="1" />
         </a-button>
         <a-button 
           :disabled="currentPage >= totalPages" 
-          class="px-2 text-sm border rounded-md disabled:opacity-50"
+          class="px-2 text-xs lg:text-sm border rounded-md disabled:opacity-50"
           @click="onPageChangeCustom(currentPage + 1)"
         >
           <v-icon name="pr-chevron-right" scale="1" />
         </a-button>
         <a-button 
           :disabled="currentPage >= totalPages" 
-          class="px-2 text-sm border rounded-md disabled:opacity-50"
+          class="px-2 text-xs lg:text-sm border rounded-md disabled:opacity-50"
           @click="onPageChangeCustom(totalPages)"
         >
           <v-icon name="pr-angle-double-right" scale="1" />

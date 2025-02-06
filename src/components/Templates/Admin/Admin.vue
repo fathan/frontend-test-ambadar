@@ -19,8 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
 
 import { useAppStore } from '@stores/app';
 
@@ -28,6 +29,7 @@ import OrganismsSidebar from '@components/Organisms/OrganismsSidebar';
 import OrganismsNavbar from '@components/Organisms/OrganismsNavbar';
 
 const appStore = useAppStore();
+const route = useRoute();
 
 const { isSidebarOpen } = storeToRefs(appStore);
 const mainContent = ref<HTMLElement | null>(null);
@@ -40,6 +42,10 @@ const handleResize = () => {
     appStore.setIsSidebarOpen(true);
   }
 };
+
+watch(route, () => {
+  handleResize();
+});
 
 onMounted(() => {
   if (mainContent.value) {

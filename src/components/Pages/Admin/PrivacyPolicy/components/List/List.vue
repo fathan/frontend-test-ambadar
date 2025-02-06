@@ -9,7 +9,7 @@
         :breadcrumb-data="state.breadcrumbs"
       />
   
-      <div class="bg-white rounded-lg shadow-lg p-6">
+      <div class="bg-white rounded-lg shadow-lg p-3 lg:p-6">
         <div class="flex justify-between my-4">
           <div class="text-2xl font-semibold text-gray-700">
             Privacy Policy

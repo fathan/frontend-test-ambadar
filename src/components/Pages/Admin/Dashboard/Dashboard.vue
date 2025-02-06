@@ -1,11 +1,11 @@
 <template>
-  <div class="pt-6 px-8">
+  <div class="pt-6 px-4 lg:px-8">
     <MoleculeBreadcrumbs
       :base-path="'/admin/user'"
       :breadcrumb-data="state.breadcrumbs"
     />
 
-    <section class="grid grid-cols-3 gap-8">
+    <section class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
       <MoleculeCardDashboard title="Your IP Projects">
         <template #content-wrapper>
           <MoleculeCardInfoDashboard

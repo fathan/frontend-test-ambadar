@@ -4,7 +4,7 @@
       <div
         v-for="tab in tabs"
         :key="tab.value"
-        class="text-sm py-2 px-4 cursor-pointer"
+        class="text-xs lg:text-sm py-2 px-4 cursor-pointer"
         :class="{
           'text-[#5b5b5b] bg-white rounded-lg': tab.value === activeTab,
           'text-[#a8aeb8] bg-transparent': tab.value !== activeTab
