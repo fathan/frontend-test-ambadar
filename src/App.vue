@@ -5,12 +5,16 @@
         <component :is="Component" />
       </transition>
     </router-view>
+
+    <AtomBadgeHelpSupport @click="onClickHelp" />
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App'
+<script setup lang="ts">
+import AtomBadgeHelpSupport from '@components/Atoms/AtomBadgeHelpSupport';
+
+const onClickHelp = () => {
+  window.alert('Please contact us to administrator or developer');
 };
 </script>
 

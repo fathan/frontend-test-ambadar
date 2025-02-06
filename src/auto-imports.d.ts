@@ -31,6 +31,7 @@ declare module 'vue' {
     ATabPane: typeof import('ant-design-vue/es')['TabPane']
     ATabs: typeof import('ant-design-vue/es')['Tabs']
     AtomBadge: typeof import('./components/Atoms/AtomBadge/AtomBadge.vue')['default']
+    AtomBadgeHelpSupport: typeof import('./components/Atoms/AtomBadgeHelpSupport/AtomBadgeHelpSupport.vue')['default']
     AtomButton: typeof import('./components/Atoms/AtomButton/AtomButton.vue')['default']
     AtomIcon: typeof import('./components/Atoms/AtomIcon/AtomIcon.vue')['default']
     AtomLoaderSpiner: typeof import('./components/Atoms/AtomLoaderSpiner/AtomLoaderSpiner.vue')['default']
