@@ -75,7 +75,7 @@
         </div>
 
         <DataTable 
-          :value="users" 
+          :value="ipprojects" 
           :loading="loading" 
           :paginator="false" 
           :rows="perPage" 
@@ -193,7 +193,7 @@ const options = ref<SelectProps['options']>([
   { value: 'tom', label: 'Tom' }
 ]);
 
-const users = ref([]);
+const ipprojects = ref([]);
 const totalRecords: Ref<number> = ref(0);
 const loading: Ref<boolean> = ref(false);
 const currentPage: Ref<number> = ref(1);
@@ -243,7 +243,7 @@ const filterOptionSelectSecondary = (input: string, option: any) => {
 
 // /////////////////////////////////////
 
-const xhrFetchUsers = async () => {
+const xhrFetchData = async () => {
   loading.value = true;
   
   const _sortOrder = sortOrder.value === 1 ? 'asc' : 'desc';
@@ -259,7 +259,7 @@ const xhrFetchUsers = async () => {
     const data = await response.json();
     const total = response.headers.get('x-total-count');
 
-    users.value = data;
+    ipprojects.value = data;
     totalRecords.value = total ? parseInt(total) : 10;
   }
   catch (error) {
@@ -278,21 +278,21 @@ const onPageChange = (event: any) => {
   currentPage.value = event.page + 1;
   perPage.value = event.rows;
 
-  xhrFetchUsers();
+  xhrFetchData();
 };
 
 const onSortChange = (event: any) => {
   sortField.value = event.sortField;
   sortOrder.value = event.sortOrder;
 
-  xhrFetchUsers();
+  xhrFetchData();
 };
 
 const onSelectionChange = (event: any) => {
   selectedRows.value = event.value;
 };
 
-onMounted(xhrFetchUsers);
+onMounted(xhrFetchData);
 
 const totalPages = computed(() => Math.ceil(totalRecords.value / perPage.value));
 
@@ -307,6 +307,6 @@ const onPageChangeCustom = (page: number) => {
 
   currentPage.value = page;
 
-  xhrFetchUsers();
+  xhrFetchData();
 };
 </script>

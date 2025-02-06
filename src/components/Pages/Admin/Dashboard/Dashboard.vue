@@ -84,11 +84,76 @@
         </template>
       </MoleculeCardDashboard>
     </section>
+
+    <section class="bg-white border border-gray-200 rounded-md shadow-sm p-6 mt-10">
+      <div class="flex flex-row justify-between mb-6">
+        <div class="text-2xl font-semibold">
+          Last Update
+        </div>
+
+        <div>
+          <a-button type="primary" size="large">
+            See More
+          </a-button>
+        </div>
+      </div>
+
+      <DataTable 
+        :value="projects" 
+        :loading="loading" 
+        :paginator="false" 
+        :rows="perPage" 
+        :totalRecords="totalRecords"
+        :lazy="true"
+        :first="(currentPage - 1) * perPage"
+        :sortField="sortField"
+        :sortOrder="sortOrder"
+        :rowsPerPageOptions="[5, 10, 20, 50]"
+        class="border border-gray-200 rounded-lg overflow-hidden"
+        @page="onPageChange"
+        @sort="onSortChange"
+        @selection-change="onSelectionChange"
+      >
+        <Column field="name" header="Name Company" sortable headerClass="bg-gray-100 text-center text-gray-500" />
+        <Column field="" header="IP Type" sortable headerClass="bg-gray-100 text-center text-gray-500">
+          <template #body>
+            -
+          </template>
+        </Column>
+        <Column field="" header="Project No" sortable headerClass="bg-gray-100 text-center text-gray-500">
+          <template #body>
+            -
+          </template>
+        </Column>
+        <Column field="" header="Client Ref" sortable headerClass="bg-gray-100 text-center text-gray-500">
+          <template #body>
+            -
+          </template>
+        </Column>
+        <Column field="" header="Last Update" sortable headerClass="bg-gray-100 text-center text-gray-500">
+          <template #body>
+            -
+          </template>
+        </Column>
+        <Column header="Action" headerClass="bg-gray-100 text-center text-gray-500">
+          <template #body="slotProps">
+            <a-button
+              type="primary"
+              class="px-2"
+              @click="onClickDetailData(slotProps.data)"
+            >
+              <v-icon name="bi-eye" scale="1" />
+            </a-button>
+          </template>
+        </Column>
+      </DataTable>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed } from 'vue';
+import { reactive, ref, computed, onMounted } from 'vue';
+import type { Ref } from 'vue';
 
 import { DoughnutChart, useDoughnutChart } from 'vue-chart-3';
 import { Chart, registerables } from 'chart.js';
@@ -112,6 +177,19 @@ const state = reactive<IState>({
     }
   ]
 });
+
+// //////////////////////////////
+
+const projects = ref([]);
+const totalRecords: Ref<number> = ref(0);
+const loading: Ref<boolean> = ref(false);
+const currentPage: Ref<number> = ref(1);
+const perPage: Ref<number> = ref(5);
+const sortField: Ref<string> = ref('');
+const sortOrder: Ref<number> = ref(1);
+const selectedRows: Ref<any[]> = ref([]);
+
+// //////////////////////////////
 
 const dataValues = ref([
   30, 40, 60
@@ -158,5 +236,58 @@ const { doughnutChartProps } = useDoughnutChart({
   chartData: testData,
   options
 });
+
+// /////////////////////////////////////
+
+const xhrFetchData = async () => {
+  loading.value = true;
+  
+  const _sortOrder = sortOrder.value === 1 ? 'asc' : 'desc';
+  const queryParams = new URLSearchParams({
+    _page: currentPage.value.toString(),
+    _limit: perPage.value.toString(),
+    _sort: sortField.value,
+    _order: _sortOrder
+  });
+
+  try {
+    const response = await fetch(`https://jsonplaceholder.typicode.com/users?${ queryParams }`);
+    const data = await response.json();
+    const total = response.headers.get('x-total-count');
+
+    projects.value = data;
+    totalRecords.value = total ? parseInt(total) : 10;
+  }
+  catch (error) {
+    console.error('Failed to fetch data:', error);
+  }
+  finally {
+    loading.value = false;
+  }
+};
+
+const onClickDetailData = (data: any) => {
+  console.log('detail data:', data);
+};
+
+const onPageChange = (event: any) => {
+  currentPage.value = event.page + 1;
+  perPage.value = event.rows;
+
+  xhrFetchData();
+};
+
+const onSortChange = (event: any) => {
+  sortField.value = event.sortField;
+  sortOrder.value = event.sortOrder;
+
+  xhrFetchData();
+};
+
+const onSelectionChange = (event: any) => {
+  selectedRows.value = event.value;
+};
+
+onMounted(xhrFetchData);
 
 </script>
