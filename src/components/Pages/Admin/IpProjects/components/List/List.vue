@@ -166,6 +166,8 @@
         />
       </div>
     </div>
+
+    <contextHolder />
   </div>
 </template>
 
@@ -173,6 +175,7 @@
 import { ref, onMounted, reactive, computed } from 'vue';
 import type { Ref } from 'vue';
 import type { SelectProps } from 'ant-design-vue';
+import { notification } from 'ant-design-vue';
 
 import MockIpProjects from '@/__mock__/ip-project.json';
 
@@ -189,6 +192,15 @@ interface IState {
   breadcrumbs: IBreadcrumbData[];
   activeTab: string;
 }
+
+interface INotification {
+  type: 'success' | 'failed';
+  content: string
+}
+
+const [
+  api, contextHolder
+] = notification.useNotification();
 
 const state = reactive<IState>({
   breadcrumbs: [
@@ -256,6 +268,23 @@ const filterOptionSelectSecondary = (input: string, option: any) => {
 
 // /////////////////////////////////////
 
+const openNotification = (param: INotification) => {
+  if (param.type === 'success') {
+    api.info({
+      message: '',
+      description: param.content,
+      placement: 'bottomRight'
+    });
+  }
+  else if (param.type === 'failed') {
+    api.error({
+      message: '',
+      description: param.content,
+      placement: 'bottomRight'
+    });
+  }
+};
+
 const xhrFetchData = async () => {
   loading.value = true;
   
@@ -274,8 +303,11 @@ const xhrFetchData = async () => {
     ipprojects.value = response.data;
     totalRecords.value = total ? parseInt(total) : 10;
   }
-  catch (error) {
-    console.error('Failed to fetch data:', error);
+  catch (error: any) {
+    openNotification({
+      type: 'failed',
+      content: error.message
+    });
   }
   finally {
     loading.value = false;
@@ -326,6 +358,19 @@ const onClickExportData = () => {
   const fileName = generateFileName('ip-projects', 'csv');
   const finalData = MockIpProjects.data;
 
-  exportJsonToCSV(finalData, fileName);
+  exportJsonToCSV(finalData, fileName, (success, message) => {
+    if (success) {
+      openNotification({
+        type: 'success',
+        content: message
+      });
+    }
+    else {
+      openNotification({
+        type: 'failed',
+        content: message
+      });
+    }
+  });
 };
 </script>

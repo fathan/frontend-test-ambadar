@@ -9,35 +9,46 @@ export const generateFileName = (prefix: string, extension: string): string => {
   return result;
 };
 
-export const exportJsonToCSV = (data: any[], filename = 'document.csv') => {
+export const exportJsonToCSV = (
+  data: any[], 
+  filename = 'document.csv', 
+  callback?: (success: boolean, message: string) => void
+) => {
   if (!data.length) {
-    console.warn('Tidak terdapat data untuk diekspor.');
-
+    const message = 'Tidak terdapat data untuk diekspor.';
+    console.warn(message);
+    callback?.(false, message);
     return;
   }
 
-  const headers = Object.keys(data[0]).join(',');
+  try {
+    const headers = Object.keys(data[0]).join(',');
 
-  const csvRows = data.map((row) => {
-    return Object.values(row)
-      .map((value) => `"${ String(value).replace(/"/g, '""') }"`)
-      .join(',');
-  });
+    const csvRows = data.map((row) =>
+      Object.values(row)
+        .map((value) => `"${ String(value).replace(/"/g, '""') }"`)
+        .join(',')
+    );
 
-  const csvContent = [
-    headers,
-    ...csvRows
-  ].join('\n');
-
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-  const link = document.createElement('a');
-
-  link.href = URL.createObjectURL(blob);
-  link.setAttribute('download', filename);
+    const csvContent = [
+      headers,
+      ...csvRows
+    ].join('\n');
   
-  document.body.appendChild(link);
-  
-  link.click();
-  
-  document.body.removeChild(link);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    callback?.(true, 'Data berhasil diunduh.');
+  }
+  catch (error) {
+    console.error('Gagal mengekspor CSV:', error);
+    callback?.(false, 'Gagal mengekspor CSV.');
+  }
 };
+
