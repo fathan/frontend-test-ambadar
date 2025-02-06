@@ -2,7 +2,7 @@
   <div>
     <div class="bg-[#0d1628] h-80 w-full" />
 
-    <div class="p-4 px-8 -mt-72">
+    <div class="p-4 px-8 -mt-80">
       <MoleculeBreadcrumbs
         :base-path="'/admin/user'"
         :breadcrumb-data="state.breadcrumbs"
@@ -36,6 +36,43 @@
           :activeTab="state.activeTab"
           @update:active-tab="state.activeTab = $event"
         />
+
+        <div class="flex flex-row justify-between bg-[#f5f5f5] rounded-sm p-3">
+          <div>
+            <a-input size="large" placeholder="Search">
+              <template #prefix>
+                <v-icon name="md-search-outlined" class="mr-2 text-gray-300" />
+              </template>
+            </a-input>
+          </div>
+
+          <div class="flex flexx-row gap-4">
+            <a-select
+              v-model:value="valueSearchPrimary"
+              show-search
+              placeholder="Choose IP"
+              size="large"
+              style="width: 300px"
+              :options="options"
+              :filter-option="filterOptionSelectPrimary"
+              @focus="handleFocusSelectPrimary"
+              @blur="handleBlurSelectPrimary"
+              @change="handleChangeSelectPrimary"
+            />
+            <a-select
+              v-model:value="valueSearchSecondary"
+              show-search
+              placeholder="Select Columns"
+              size="large"
+              style="width: 500px"
+              :options="options"
+              :filter-option="filterOptionSelectSecondary"
+              @focus="handleFocusSelectSecondary"
+              @blur="handleBlurSelectSecondary"
+              @change="handleChangeSelectSecondary"
+            />
+          </div>
+        </div>
 
         <DataTable 
           :value="users" 
@@ -128,6 +165,7 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive, computed } from 'vue';
 import type { Ref } from 'vue';
+import type { SelectProps } from 'ant-design-vue';
 
 import type { IBreadcrumbData } from '@/components/Molecules/MoleculeBreadcrumbs/model';
 
@@ -149,6 +187,12 @@ const state = reactive<IState>({
   activeTab: 'all'
 });
 
+const options = ref<SelectProps['options']>([
+  { value: 'jack', label: 'Jack' },
+  { value: 'lucy', label: 'Lucy' },
+  { value: 'tom', label: 'Tom' }
+]);
+
 const users = ref([]);
 const totalRecords: Ref<number> = ref(0);
 const loading: Ref<boolean> = ref(false);
@@ -157,6 +201,47 @@ const perPage: Ref<number> = ref(5);
 const sortField: Ref<string> = ref('');
 const sortOrder: Ref<number> = ref(1);
 const selectedRows: Ref<any[]> = ref([]);
+
+// /////////////////////////////////////
+
+const valueSearchPrimary = ref<string | undefined>(undefined);
+const valueSearchSecondary = ref<string | undefined>(undefined);
+
+const handleChangeSelectPrimary = (value: any) => {
+  console.log(`selected ${ value }`);
+};
+
+const handleBlurSelectPrimary = () => {
+  console.log('blur');
+};
+
+const handleFocusSelectPrimary = () => {
+  console.log('focus');
+};
+
+const filterOptionSelectPrimary = (input: string, option: any) => {
+  return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+};
+
+// /////////////////////////////////////
+
+const handleChangeSelectSecondary = (value: any) => {
+  console.log(`selected ${ value }`);
+};
+
+const handleBlurSelectSecondary = () => {
+  console.log('blur');
+};
+
+const handleFocusSelectSecondary = () => {
+  console.log('focus');
+};
+
+const filterOptionSelectSecondary = (input: string, option: any) => {
+  return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+};
+
+// /////////////////////////////////////
 
 const xhrFetchUsers = async () => {
   loading.value = true;

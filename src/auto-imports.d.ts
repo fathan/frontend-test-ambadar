@@ -34,6 +34,7 @@ declare module 'vue' {
     AtomButton: typeof import('./components/Atoms/AtomButton/AtomButton.vue')['default']
     AtomIcon: typeof import('./components/Atoms/AtomIcon/AtomIcon.vue')['default']
     AtomLoaderSpiner: typeof import('./components/Atoms/AtomLoaderSpiner/AtomLoaderSpiner.vue')['default']
+    ATooltip: typeof import('ant-design-vue/es')['Tooltip']
     Auth: typeof import('./components/Templates/Auth/Auth.vue')['default']
     Dashboard: typeof import('./components/Pages/Admin/Dashboard/Dashboard.vue')['default']
     Detail: typeof import('./components/Pages/Admin/IpProjects/components/Detail/Detail.vue')['default']

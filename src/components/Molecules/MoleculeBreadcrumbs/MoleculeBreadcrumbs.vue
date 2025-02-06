@@ -1,6 +1,6 @@
 <template>
   <a-breadcrumb
-    separator="&nbsp;&nbsp;>&nbsp;&nbsp;"
+    separator=""
     class="mb-4"
     :routes="breadcrumbData"
   >
@@ -10,27 +10,38 @@
         :to="{
           path: '/admin/dashboard'
         }"
+        class="text-[#a9a7a7]"
       >
-        Home
+        <v-icon name="ri-home-6-line" scale="1" class="text-[#a9a7a7]" />
       </router-link>
 
       <span v-if="breadcrumbData.indexOf(route) === 0">
-        &nbsp;&nbsp;&nbsp;>&nbsp;&nbsp;&nbsp;
+        &nbsp;
+        <v-icon name="pr-chevron-right" scale="1" class="text-[#a9a7a7]" />
+        &nbsp;
       </span>
 
       <router-link
         v-if="route.isTitle"
         :to="`${ basePath }`"
+        class="text-white"
       >
         {{ route.breadcrumbName }}
       </router-link>
 
-      <span v-else-if="breadcrumbData.indexOf(route) === breadcrumbData.length - 1">
+      <span
+        v-else-if="breadcrumbData.indexOf(route) === breadcrumbData.length - 1"
+        class="text-[#a9a7a7]"
+      >
         {{ route.breadcrumbName }}
       </span>
 
-      <router-link v-else :to="computeLink(basePath, paths)">
-        {{ route.breadcrumbName }}
+      <router-link
+        v-else
+        :to="computeLink(basePath, paths)"
+      >
+        <span class="text-white">{{ route.breadcrumbName }}</span>
+        <v-icon name="pr-chevron-right" scale="1" class="text-[#a9a7a7]" />
       </router-link>
     </template>
   </a-breadcrumb>
