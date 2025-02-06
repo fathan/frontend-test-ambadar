@@ -1,6 +1,6 @@
 <!-- eslint-disable max-len -->
 <template>
-  <header class="w-full p-3 px-4 flex justify-between fixed top-0 left-0 right-0">
+  <header class="w-full p-3 px-8 flex justify-between fixed top-0 left-0 right-0">
     <div
       :class="[
         'flex justify-center items-center',

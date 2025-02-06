@@ -6,7 +6,7 @@
       isSidebarOpen ? 'w-60' : 'w-0'
     ]"
   >
-    <div class="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-[#020203] pt-0">
+    <div class="relative flex-1 flex flex-col min-h-0 bg-[#020203] pt-0">
       <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
         <div class="flex px-5 mb-5 items-center justify-center">
           <div class="mb-4 mr-2">
@@ -112,6 +112,29 @@
             </li>
           </ul>
         </div>
+
+        <div class="px-3">
+          <ul class="space-y-2 pb-2">
+            <li
+              v-for="(item, idx) in footerMenuData"
+              :key="idx"
+            >
+              <div class="flex items-center">
+                <router-link
+                  :to="{
+                    path: item.link
+                  }"
+                  class="w-full flex p-2 text-white text-base font-bold rounded-lg hover:bg-[#3a3c42]"
+                >
+                  <v-icon :name="item.icon" scale="1" />
+                  <span class="ml-3 text-[#ffffff] font-light text-sm">
+                    {{ item.title }}
+                  </span>
+                </router-link>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </aside>
@@ -182,6 +205,25 @@ const menuData: MenuItem[] = [
   {
     title: 'Reports',
     icon: 'ri-pie-chart-line',
+    link: '/admin/dashboard',
+    access: [
+      UserRole.SuperAdmin, UserRole.Admin, UserRole.User
+    ]
+  }
+];
+
+const footerMenuData: MenuItem[] = [
+  {
+    title: 'Privacy Policy',
+    icon: 'bi-file-earmark-lock',
+    link: '/admin/dashboard',
+    access: [
+      UserRole.SuperAdmin, UserRole.Admin, UserRole.User
+    ]
+  },
+  {
+    title: 'Support',
+    icon: 'bi-question-circle',
     link: '/admin/dashboard',
     access: [
       UserRole.SuperAdmin, UserRole.Admin, UserRole.User

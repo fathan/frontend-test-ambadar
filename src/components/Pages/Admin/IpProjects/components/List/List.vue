@@ -1,21 +1,142 @@
 <template>
   <div>
-    <MoleculeBreadcrumbs
-      :base-path="'/admin/user'"
-      :breadcrumb-data="state.breadcrumbs"
-    />
+    <div class="bg-[#0d1628] h-80 w-full" />
 
-    <div>
-      @TODO
+    <div class="p-4 px-8 -mt-72">
+      <MoleculeBreadcrumbs
+        :base-path="'/admin/user'"
+        :breadcrumb-data="state.breadcrumbs"
+      />
+  
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="flex justify-between my-4">
+          <div class="text-2xl font-semibold text-gray-700">
+            IP Project
+          </div>
+
+          <div>
+            <a-button size="large" class="border border-gray-500">
+              <template #icon>
+                <v-icon name="md-filedownload-outlined" class="mr-2" />
+              </template>
+              <span class="text-sm">
+                Export
+              </span>
+            </a-button>
+          </div>
+        </div>
+
+        <MoleculeTabBar
+          :tabs="[
+            { label: 'All', value: 'all' },
+            { label: 'In Progress', value: 'in-progress' },
+            { label: 'Pending', value: 'pending' },
+            { label: 'Completed', value: 'completed' }
+          ]"
+          :activeTab="state.activeTab"
+          @update:active-tab="state.activeTab = $event"
+        />
+
+        <DataTable 
+          :value="users" 
+          :loading="loading" 
+          :paginator="false" 
+          :rows="perPage" 
+          :totalRecords="totalRecords"
+          :lazy="true"
+          :first="(currentPage - 1) * perPage"
+          :sortField="sortField"
+          :sortOrder="sortOrder"
+          :rowsPerPageOptions="[5, 10, 20, 50]"
+          :selection="selectedRows"
+          dataKey="id"
+          class="border border-gray-200 rounded-lg overflow-hidden"
+          @page="onPageChange"
+          @sort="onSortChange"
+          @selection-change="onSelectionChange"
+        >
+          <Column selectionMode="multiple" headerStyle="width: 3rem" />
+          <Column field="id" header="No" headerClass="bg-gray-100 text-center text-gray-500" />
+          <Column field="name" header="Project Name" sortable headerClass="bg-gray-100 text-center text-gray-500" />
+          <Column field="" header="IP Type" sortable headerClass="bg-gray-100 text-center text-gray-500">
+            <template #body>
+              -
+            </template>
+          </Column>
+          <Column field="" header="Project No" sortable headerClass="bg-gray-100 text-center text-gray-500">
+            <template #body>
+              -
+            </template>
+          </Column>
+          <Column field="" header="Filling No" sortable headerClass="bg-gray-100 text-center text-gray-500">
+            <template #body>
+              -
+            </template>
+          </Column>
+          <Column field="" header="Registered No" sortable headerClass="bg-gray-100 text-center text-gray-500">
+            <template #body>
+              -
+            </template>
+          </Column>
+          <Column field="" header="Order Type" sortable headerClass="bg-gray-100 text-center text-gray-500">
+            <template #body>
+              -
+            </template>
+          </Column>
+          <Column field="" header="PIC" sortable headerClass="bg-gray-100 text-center text-gray-500">
+            <template #body>
+              -
+            </template>
+          </Column>
+          <Column field="" header="Status" sortable headerClass="bg-gray-100 text-center text-gray-500">
+            <template #body="slotProps">
+              <span 
+                :class="[
+                  'px-2 py-1 rounded-lg bg-transparent border text-sm',
+                  slotProps.index % 2 === 0 ? 'border-yellow-500 text-yellow-500' : 'border-blue-500 text-blue-500'
+                ]"
+              >
+                {{ slotProps.index % 2 === 0 ? 'Pending' : 'In Progress' }}
+              </span>
+            </template>
+          </Column>
+          <Column header="Action" headerClass="bg-gray-100 text-center text-gray-500">
+            <template #body="slotProps">
+              <a-button
+                type="primary"
+                class="px-2"
+                @click="onClickEditData(slotProps.data)"
+              >
+                <v-icon name="bi-eye" scale="1" />
+              </a-button>
+            </template>
+          </Column>
+        </DataTable>
+
+        <MoleculePaginationDatatable 
+          v-model:perPage="perPage"
+          :selectedRows="selectedRows"
+          :totalRecords="totalRecords"
+          :currentPage="currentPage"
+          @page-change="onPageChangeCustom"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { ref, onMounted, reactive, computed } from 'vue';
+import type { Ref } from 'vue';
+
+import type { IBreadcrumbData } from '@/components/Molecules/MoleculeBreadcrumbs/model';
+
+import MoleculeTabBar from '@components/Molecules/MoleculeTabBar';
+import MoleculePaginationDatatable from '@/components/Molecules/MoleculePaginationDatatable';
 
 interface IState {
   breadcrumbs: IBreadcrumbData[];
+  activeTab: string;
 }
 
 const state = reactive<IState>({
@@ -24,7 +145,83 @@ const state = reactive<IState>({
       path: '',
       breadcrumbName: 'IP Projects'
     }
-  ]
+  ],
+  activeTab: 'all'
 });
 
+const users = ref([]);
+const totalRecords: Ref<number> = ref(0);
+const loading: Ref<boolean> = ref(false);
+const currentPage: Ref<number> = ref(1);
+const perPage: Ref<number> = ref(5);
+const sortField: Ref<string> = ref('');
+const sortOrder: Ref<number> = ref(1);
+const selectedRows: Ref<any[]> = ref([]);
+
+const xhrFetchUsers = async () => {
+  loading.value = true;
+  
+  const _sortOrder = sortOrder.value === 1 ? 'asc' : 'desc';
+  const queryParams = new URLSearchParams({
+    _page: currentPage.value.toString(),
+    _limit: perPage.value.toString(),
+    _sort: sortField.value,
+    _order: _sortOrder
+  });
+
+  try {
+    const response = await fetch(`https://jsonplaceholder.typicode.com/users?${ queryParams }`);
+    const data = await response.json();
+    const total = response.headers.get('x-total-count');
+
+    users.value = data;
+    totalRecords.value = total ? parseInt(total) : 10;
+  }
+  catch (error) {
+    console.error('Failed to fetch data:', error);
+  }
+  finally {
+    loading.value = false;
+  }
+};
+
+const onClickEditData = (data: any) => {
+  console.log('edit data:', data);
+};
+
+const onPageChange = (event: any) => {
+  currentPage.value = event.page + 1;
+  perPage.value = event.rows;
+
+  xhrFetchUsers();
+};
+
+const onSortChange = (event: any) => {
+  sortField.value = event.sortField;
+  sortOrder.value = event.sortOrder;
+
+  xhrFetchUsers();
+};
+
+const onSelectionChange = (event: any) => {
+  selectedRows.value = event.value;
+};
+
+onMounted(xhrFetchUsers);
+
+const totalPages = computed(() => Math.ceil(totalRecords.value / perPage.value));
+
+const onPageChangeCustom = (page: number) => {
+  if (page < 1) {
+    page = 1;
+  }
+
+  if (page > totalPages.value) {
+    page = totalPages.value;
+  }
+
+  currentPage.value = page;
+
+  xhrFetchUsers();
+};
 </script>

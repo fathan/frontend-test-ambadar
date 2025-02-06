@@ -6,8 +6,14 @@ import mitt from 'mitt';
 import { OhVueIcon, addIcons } from 'oh-vue-icons';
 import {
   RiDashboardLine, RiScales3Line, OiLightBulb, HiCurrencyDollar, RiPieChartLine, RiLeafLine,
-  IoPrismSharp, IoDocument
+  IoPrismSharp, IoDocument, BiQuestionCircle, BiFileEarmarkLock, BiEye, PrAngleDoubleLeft,
+  PrAngleDoubleRight, PrChevronLeft, PrChevronRight, MdFiledownloadOutlined
 } from 'oh-vue-icons/icons';
+
+import PrimeVue from 'primevue/config';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import Paginator from 'primevue/paginator';
 
 import App from './App.vue';
 import router from './router';
@@ -48,8 +54,19 @@ app.use(router);
  * */
 addIcons(
   RiDashboardLine, RiScales3Line, OiLightBulb, HiCurrencyDollar, RiPieChartLine, RiLeafLine,
-  IoPrismSharp, IoDocument
+  IoPrismSharp, IoDocument, BiQuestionCircle, BiFileEarmarkLock, BiEye, PrAngleDoubleLeft,
+  PrAngleDoubleRight, PrChevronLeft, PrChevronRight, MdFiledownloadOutlined
 );
+
+/**
+ * DataTable
+ */
+app.use(PrimeVue, {
+  theme: 'none'
+});
+app.component('DataTable', DataTable);
+app.component('Column', Column);
+app.component('Paginator', Paginator);
 
 app.component('v-icon', OhVueIcon);
 

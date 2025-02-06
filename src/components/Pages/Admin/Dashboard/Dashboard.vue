@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pt-6 px-8">
     <MoleculeBreadcrumbs
       :base-path="'/admin/user'"
       :breadcrumb-data="state.breadcrumbs"
@@ -91,7 +91,8 @@
 import { reactive, ref, computed } from 'vue';
 
 import { DoughnutChart, useDoughnutChart } from 'vue-chart-3';
-import { Chart, ChartData, ChartOptions, registerables } from 'chart.js';
+import { Chart, registerables } from 'chart.js';
+import type { ChartData, ChartOptions } from 'chart.js';
 
 import type { IBreadcrumbData } from '@/components/Molecules/MoleculeBreadcrumbs/model';
 import MoleculeCardInfoDashboard from '@/components/Molecules/MoleculeCardInfoDashboard';
@@ -126,9 +127,9 @@ const testData = computed<ChartData<'doughnut'>>(() => ({
     {
       data: dataValues.value,
       backgroundColor: [
-        '#77CEFF',
-        '#0079AF',
-        '#123E6B'
+        '#0036ac',
+        '#961e6e',
+        '#00b4a5'
       ]
     }
   ]

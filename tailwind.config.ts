@@ -1,3 +1,5 @@
+const primeui = require('tailwindcss-primeui');
+
 export default {
   content: [
     './index.html',
@@ -41,5 +43,5 @@ export default {
       'auto': 'auto'
     }
   },
-  plugins: []
+  plugins: [primeui]
 };

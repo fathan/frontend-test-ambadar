@@ -12,9 +12,7 @@
       <OrganismsNavbar />
 
       <main class="flex-1 mt-16 overflow-y-auto pb-10">
-        <div class="pt-6 px-4">
-          <router-view />
-        </div>
+        <router-view />
       </main>
     </div>
   </div>
