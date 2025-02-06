@@ -34,6 +34,7 @@
                       path: item.link
                     }"
                     class="w-full flex p-2 text-white text-base font-bold rounded-lg hover:bg-[#3a3c42]"
+                    :class="{'bg-[#3a3c42]': $route.path === item.link}"
                   >
                     <v-icon :name="item.icon" scale="1" />
                     <span class="ml-3 text-[#ffffff] font-light text-sm">
@@ -59,6 +60,7 @@
                         path: child.link
                       }" 
                       class="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-[#ffffff] group"
+                      :class="{'bg-[#3a3c42]': $route.path === child.link}"
                     >
                       <img :src="child.icon">
                       <span class="ml-3 text-white font-light">
@@ -254,6 +256,6 @@ onMounted(() => {
 
 <style scoped>
 .router-link-exact-active {
-  @apply bg-[#020203];
+  @apply bg-[#3a3c42];
 }
 </style>
