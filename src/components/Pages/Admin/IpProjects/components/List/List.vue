@@ -113,12 +113,12 @@
 
           <Column selectionMode="multiple" headerStyle="width: 3rem" />
           <Column field="id" header="No" headerClass="bg-gray-100 text-center text-gray-500" />
-          <Column field="" header="Project Name" sortable headerClass="bg-gray-100 text-center text-gray-500">
+          <Column field="company.name" header="Project Name" sortable headerClass="bg-gray-100 text-center text-gray-500">
             <template #body="slotProps">
               {{ slotProps.data.company.name }}
             </template>
           </Column>
-          <Column field="" header="IP Type" sortable headerClass="bg-gray-100 text-center text-gray-500">
+          <Column field="" header="IP Type" headerClass="bg-gray-100 text-center text-gray-500">
             <template #body>
               -
             </template>
