@@ -189,7 +189,7 @@ const menuData: MenuItem[] = [
   {
     title: 'Case Management',
     icon: 'ri-scales-3-line',
-    link: '/admin/dashboard',
+    link: '/admin/case-management',
     access: [
       UserRole.SuperAdmin, UserRole.Admin, UserRole.User
     ]
@@ -197,7 +197,7 @@ const menuData: MenuItem[] = [
   {
     title: 'Billing & Payment',
     icon: 'hi-currency-dollar',
-    link: '/admin/dashboard',
+    link: '/admin/billing-and-payment',
     access: [
       UserRole.SuperAdmin, UserRole.Admin, UserRole.User
     ]
@@ -205,7 +205,7 @@ const menuData: MenuItem[] = [
   {
     title: 'Reports',
     icon: 'ri-pie-chart-line',
-    link: '/admin/dashboard',
+    link: '/admin/reports',
     access: [
       UserRole.SuperAdmin, UserRole.Admin, UserRole.User
     ]
@@ -216,7 +216,7 @@ const footerMenuData: MenuItem[] = [
   {
     title: 'Privacy Policy',
     icon: 'bi-file-earmark-lock',
-    link: '/admin/dashboard',
+    link: '/admin/privacy-policy',
     access: [
       UserRole.SuperAdmin, UserRole.Admin, UserRole.User
     ]
@@ -224,7 +224,7 @@ const footerMenuData: MenuItem[] = [
   {
     title: 'Support',
     icon: 'bi-question-circle',
-    link: '/admin/dashboard',
+    link: '/admin/support',
     access: [
       UserRole.SuperAdmin, UserRole.Admin, UserRole.User
     ]

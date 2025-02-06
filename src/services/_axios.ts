@@ -54,11 +54,11 @@ class AxiosClient {
     );
   }
 
-  public requestToServer (configuration: AxiosRequestConfig, isRefreshToken: boolean = false): Promise<any> {
+  public requestToServer (configuration: AxiosRequestConfig, isWithoutResponseData: boolean = false): Promise<any> {
     return new Promise((resolve, reject) => {
       this.instance.request(configuration)
         .then((response: AxiosResponse) => {
-          if (isRefreshToken) {
+          if (isWithoutResponseData) {
             resolve(response);
           }
           else {

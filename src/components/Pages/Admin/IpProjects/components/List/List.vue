@@ -162,7 +162,7 @@
         <a-alert
           message="Note:"
           description="XHR HTTP request fetch data dalam datatable sengaja saya buat server side agar terlihat proses fetch data ke API nya. untuk export data saya sertakan dalam bentuk dummy mock JSON file agar bisa di download."
-          type="info"
+          type="warning"
         />
       </div>
     </div>
@@ -177,6 +177,8 @@ import type { SelectProps } from 'ant-design-vue';
 import MockIpProjects from '@/__mock__/ip-project.json';
 
 import { generateFileName, exportJsonToCSV } from '@utils/app';
+
+import UserService from '@services/user';
 
 import type { IBreadcrumbData } from '@/components/Molecules/MoleculeBreadcrumbs/model';
 
@@ -266,11 +268,10 @@ const xhrFetchData = async () => {
   });
 
   try {
-    const response = await fetch(`https://jsonplaceholder.typicode.com/users?${ queryParams }`);
-    const data = await response.json();
+    const response = await UserService.getList(queryParams.toString());
     const total = response.headers.get('x-total-count');
 
-    ipprojects.value = data;
+    ipprojects.value = response.data;
     totalRecords.value = total ? parseInt(total) : 10;
   }
   catch (error) {

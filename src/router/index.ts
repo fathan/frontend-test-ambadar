@@ -43,6 +43,86 @@ const routes = [
         ]
       },
       {
+        path: 'case-management',
+        name: 'Admin Case Management',
+        component: defineAsyncComponent(() => import('@/components/Pages/Admin/CaseManagement')),
+        redirect: '/admin/case-management',
+        children: [
+          {
+            path: '',
+            name: 'Admin Case Management List',
+            component: defineAsyncComponent(() => import('@/components/Pages/Admin/CaseManagement/components/List')),
+            meta: {
+              requiresAuth: true
+            }
+          }
+        ]
+      },
+      {
+        path: 'billing-and-payment',
+        name: 'Admin Billing And Payment',
+        component: defineAsyncComponent(() => import('@/components/Pages/Admin/BillingAndPayment')),
+        redirect: '/admin/billing-and-payment',
+        children: [
+          {
+            path: '',
+            name: 'Admin Billing And Payment List',
+            component: defineAsyncComponent(() => import('@/components/Pages/Admin/BillingAndPayment/components/List')),
+            meta: {
+              requiresAuth: true
+            }
+          }
+        ]
+      },
+      {
+        path: 'reports',
+        name: 'Admin Reports',
+        component: defineAsyncComponent(() => import('@/components/Pages/Admin/Reports')),
+        redirect: '/admin/reports',
+        children: [
+          {
+            path: '',
+            name: 'Admin Reports List',
+            component: defineAsyncComponent(() => import('@/components/Pages/Admin/Reports/components/List')),
+            meta: {
+              requiresAuth: true
+            }
+          }
+        ]
+      },
+      {
+        path: 'privacy-policy',
+        name: 'Admin Privacy Policy',
+        component: defineAsyncComponent(() => import('@/components/Pages/Admin/PrivacyPolicy')),
+        redirect: '/admin/privacy-policy',
+        children: [
+          {
+            path: '',
+            name: 'Admin Privacy Policy List',
+            component: defineAsyncComponent(() => import('@/components/Pages/Admin/PrivacyPolicy/components/List')),
+            meta: {
+              requiresAuth: true
+            }
+          }
+        ]
+      },
+      {
+        path: 'support',
+        name: 'Admin Support',
+        component: defineAsyncComponent(() => import('@/components/Pages/Admin/Support')),
+        redirect: '/admin/support',
+        children: [
+          {
+            path: '',
+            name: 'Admin Support List',
+            component: defineAsyncComponent(() => import('@/components/Pages/Admin/Support/components/List')),
+            meta: {
+              requiresAuth: true
+            }
+          }
+        ]
+      },
+      {
         path: 'profile',
         name: 'Admin Profile',
         component: defineAsyncComponent(() => import('@components/Pages/Admin/Profile')),
